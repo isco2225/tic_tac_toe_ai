@@ -19,7 +19,7 @@ class GameState extends Equatable {
 
   GameState copyWith({
     List<String>? board,
-    String? winner,
+    String? roundWinner,
     String? gameWinner,
     bool? isTurnPlayer1,
     int? playerOneWinCount,
@@ -27,7 +27,7 @@ class GameState extends Equatable {
   }) {
     return GameState(
       board: board ?? this.board,
-      roundWinner: winner ?? this.roundWinner,
+      roundWinner: roundWinner ?? this.roundWinner,
       gameWinner: gameWinner ?? this.gameWinner,
       isTurnPlayer1: isTurnPlayer1 ?? this.isTurnPlayer1,
       playerOneWinCount: playerOneWinCount ?? this.playerOneWinCount,
@@ -40,6 +40,7 @@ class GameState extends Equatable {
         board,
         isTurnPlayer1,
         roundWinner,
+        gameWinner,
         playerOneWinCount,
         playerTwoWinCount,
       ];

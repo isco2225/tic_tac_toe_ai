@@ -44,10 +44,10 @@ class GameCubit extends Cubit<GameState> {
             board: updatedBoard,
             isTurnPlayer1: false,
             playerOneWinCount: state.playerOneWinCount + 1,
-            winner: 'X',
+            roundWinner: 'X',
           ),
         );
-        _gameOwer();
+        _gameOver();
         _resetBoard();
       } else {
         emit(
@@ -65,10 +65,10 @@ class GameCubit extends Cubit<GameState> {
             board: updatedBoard,
             isTurnPlayer1: true,
             playerTwoWinCount: state.playerTwoWinCount + 1,
-            winner: 'O',
+            roundWinner: 'O',
           ),
         );
-        _gameOwer();
+        _gameOver();
         _resetBoard();
       } else {
         emit(
@@ -82,7 +82,7 @@ class GameCubit extends Cubit<GameState> {
     if (!updatedBoard.contains('') && state.roundWinner == '') {
       emit(
         state.copyWith(
-          winner: 'Berabere',
+          roundWinner: 'Berabere',
         ),
       );
       _resetBoard();
@@ -92,9 +92,15 @@ class GameCubit extends Cubit<GameState> {
   }
 
   Future<void> _resetBoard() async {
+    if (state.gameWinner != '') {
+      return;
+    }
     await Future.delayed(SharedDurations.s2);
     emit(
-      state.copyWith(board: ['', '', '', '', '', '', '', '', ''], winner: ''),
+      state.copyWith(
+        board: ['', '', '', '', '', '', '', '', ''],
+        roundWinner: '',
+      ),
     );
   }
 
@@ -109,14 +115,12 @@ class GameCubit extends Cubit<GameState> {
     if (winner == '') {
       winner = _checkCrosses(board);
     }
-    print(board);
 
     return winner;
   }
 
-  void _gameOwer() {
+  void _gameOver() {
     if (state.playerOneWinCount == 3) {
-      print('game Ower');
       emit(
         state.copyWith(
           playerOneWinCount: 0,
@@ -126,7 +130,6 @@ class GameCubit extends Cubit<GameState> {
         ),
       );
     } else if (state.playerTwoWinCount == 3) {
-      print('game Ower');
       emit(
         state.copyWith(
           playerOneWinCount: 0,

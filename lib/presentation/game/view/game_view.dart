@@ -24,11 +24,8 @@ class GameView extends StatelessWidget {
           child: const Text('Oyun ekranı'),
         ),
       ),
-      body: Stack(
+      body: const Stack(
         children: [
-          /*  GameWidget(
-            game: TicTacToeGame(),
-          ),*/
           TicTacToeGame(),
         ],
       ),

@@ -77,10 +77,8 @@ class BaseScaffold extends StatelessWidget {
       onTap: () {
         onScaffoldTap?.call();
       },
-      child: WillPopScope(
-        onWillPop: () async {
-          return false;
-        },
+      child: PopScope(
+        canPop: false,
         child: KeyboardDetection(
           controller: KeyboardDetectionController(
             onChanged: isKeyboardOpen,

@@ -43,18 +43,14 @@ class GradientTextButton extends StatelessWidget {
         ),
         child: Text(
           " $text ",
-          style: style != null
-              ? style!.copyWith(
-                  shadows: [
-                    Shadow(
-                      color: textShadow == false
-                          ? Colors.transparent
-                          : Colors.purple,
-                      blurRadius: 12,
-                    ),
-                  ],
-                )
-              : null,
+          style: style!.copyWith(
+            shadows: [
+              Shadow(
+                color: textShadow == false ? Colors.transparent : Colors.purple,
+                blurRadius: 12,
+              ),
+            ],
+          ),
           textAlign: align,
           maxLines: maxLines,
           overflow: TextOverflow.ellipsis,

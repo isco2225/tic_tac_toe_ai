@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_xox_app/app/cubits/game/game.dart';
-import 'package:flutter_xox_app/presentation/game/game.dart';
 import 'package:flutter_xox_app/presentation/game/widgets/board.dart';
-import 'package:flutter_xox_app/presentation/home/game.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shared_constants/shared_constants.dart';
 import 'package:shared_widgets/shared_widgets.dart';
 
@@ -130,7 +127,6 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
               GradientButton(
                 text: 'Tekrar Oyna',
                 onPressed: () {
-                  print('basıldı');
                   context.read<GameCubit>().restartGame();
                 },
               ),
