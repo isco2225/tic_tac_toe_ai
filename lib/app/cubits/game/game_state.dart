@@ -8,6 +8,8 @@ class GameState extends Equatable {
     required this.isTurnPlayer1,
     required this.playerOneWinCount,
     required this.playerTwoWinCount,
+    required this.winStyleNumber,
+    required this.rematch,
   });
 
   final List<String> board;
@@ -16,6 +18,8 @@ class GameState extends Equatable {
   final bool isTurnPlayer1;
   final int playerOneWinCount;
   final int playerTwoWinCount;
+  final double winStyleNumber;
+  final bool rematch;
 
   GameState copyWith({
     List<String>? board,
@@ -24,6 +28,8 @@ class GameState extends Equatable {
     bool? isTurnPlayer1,
     int? playerOneWinCount,
     int? playerTwoWinCount,
+    double? winStyleNumber,
+    bool? rematch,
   }) {
     return GameState(
       board: board ?? this.board,
@@ -32,6 +38,8 @@ class GameState extends Equatable {
       isTurnPlayer1: isTurnPlayer1 ?? this.isTurnPlayer1,
       playerOneWinCount: playerOneWinCount ?? this.playerOneWinCount,
       playerTwoWinCount: playerTwoWinCount ?? this.playerTwoWinCount,
+      winStyleNumber: winStyleNumber ?? this.winStyleNumber,
+      rematch: rematch ?? this.rematch,
     );
   }
 
@@ -43,5 +51,7 @@ class GameState extends Equatable {
         gameWinner,
         playerOneWinCount,
         playerTwoWinCount,
+        winStyleNumber,
+        rematch,
       ];
 }

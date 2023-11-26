@@ -14,13 +14,11 @@ class GameBoard extends StatefulWidget {
 }
 
 class _GameBoardState extends State<GameBoard> {
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
   late StateMachineController _boardController;
+
+  SMIInput<bool>? readyToMovement;
+  SMIInput<double>? hasWinner;
+  SMIInput<bool>? openBoard;
   SMIInput<double>? box0;
   SMIInput<double>? box1;
   SMIInput<double>? box2;
@@ -30,6 +28,12 @@ class _GameBoardState extends State<GameBoard> {
   SMIInput<double>? box6;
   SMIInput<double>? box7;
   SMIInput<double>? box8;
+
+  @override
+  void dispose() {
+    _boardController.dispose();
+    super.dispose();
+  }
 
   void onInit(Artboard artboard, double turn) async {
     _boardController = StateMachineController.fromArtboard(
@@ -43,39 +47,76 @@ class _GameBoardState extends State<GameBoard> {
       onRiveEvent(riveEvent, gameState.isTurnPlayer1 ? 1 : 2);
     });
 
-    box0 = _boardController.findInput('0');
-    box1 = _boardController.findInput('1');
-    box2 = _boardController.findInput('2');
-    box3 = _boardController.findInput('3');
-    box4 = _boardController.findInput('4');
-    box5 = _boardController.findInput('5');
-    box6 = _boardController.findInput('6');
-    box7 = _boardController.findInput('7');
-    box8 = _boardController.findInput('8');
+    readyToMovement = _boardController.findInput('readyToMovement');
+    hasWinner = _boardController.findInput('hasWinner');
+    openBoard = _boardController.findInput('openBoard');
+    box0 = _boardController.findInput('box0Value');
+    box1 = _boardController.findInput('box1Value');
+    box2 = _boardController.findInput('box2Value');
+    box3 = _boardController.findInput('box3Value');
+    box4 = _boardController.findInput('box4Value');
+    box5 = _boardController.findInput('box5Value');
+    box6 = _boardController.findInput('box6Value');
+    box7 = _boardController.findInput('box7Value');
+    box8 = _boardController.findInput('box8Value');
   }
 
   void onRiveEvent(RiveEvent event, double turn) {
-    int? clickedBox = detectEventBox(event.name);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (clickedBox != null) {
-        movement(clickedBox, turn);
+    if (context.read<GameCubit>().state.gameWinner != '') {
+      return;
+    }
+    if (event.name == 'introlEnded') {
+      openBoard?.change(true);
+    } else if (event.name == 'onBoardOpen') {
+      hasWinner?.change(0);
+      readyToMovement?.change(true);
+    } else if (event.name == 'onBoardClosed') {
+      if (context.read<GameCubit>().state.playerOneWinCount != 3 &&
+          context.read<GameCubit>().state.playerTwoWinCount != 3) {
+        hasWinner?.change(0);
+        openBoard?.change(true);
       }
-    });
+      context.read<GameCubit>().gameOver();
+    } else if ((event.name == 'box0' ||
+            event.name == 'box1' ||
+            event.name == 'box2' ||
+            event.name == 'box3' ||
+            event.name == 'box4' ||
+            event.name == 'box5' ||
+            event.name == 'box6' ||
+            event.name == 'box7' ||
+            event.name == 'box8') &&
+        (readyToMovement?.value ?? false)) {
+      int? clickedBox = detectEventBox(event.name);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (clickedBox != null) {
+          movement(clickedBox, turn);
+        }
+      });
+    } else if (event.name == 'onMovementEnd') {
+      if (context.read<GameCubit>().state.roundWinner == '') {
+        readyToMovement?.change(true);
+      } else {
+        hasWinner?.change(context.read<GameCubit>().state.winStyleNumber);
+      }
+    } else if (event.name == 'roundEnd') {
+      context.read<GameCubit>().resetBoard();
+      // todo: Kutu içleri animasyonsuz gidiyor.
+      clearBoxes();
+      openBoard?.change(false);
+    }
   }
-
-  // DELETABLE
-  // List<String> board = ['', '', '', '', '', '', '', '', ''];
-  // String winner = '';
-
-  // bool isTurnO = false;
 
   @override
   Widget build(BuildContext context) {
     final gameState = context.watch<GameCubit>().state;
-
+    if (gameState.rematch == true) {
+      hasWinner?.change(0);
+      openBoard?.change(true);
+      context.read<GameCubit>().restartGame();
+    }
     return RiveAnimation.asset(
-      Assets.animations.ticTacToeBoard.path,
+      Assets.animations.ticTacToe.path,
       stateMachines: const ['State Machine 1'],
       onInit: (artBoard) {
         onInit(
@@ -110,22 +151,27 @@ class _GameBoardState extends State<GameBoard> {
       case 0:
         box0?.change(turnIndex);
         playOnCubit();
+        readyToMovement?.change(false);
         break;
       case 1:
         box1?.change(turnIndex);
         playOnCubit();
+        readyToMovement?.change(false);
         break;
       case 2:
         box2?.change(turnIndex);
         playOnCubit();
+        readyToMovement?.change(false);
         break;
       case 3:
         box3?.change(turnIndex);
         playOnCubit();
+        readyToMovement?.change(false);
         break;
       case 4:
         box4?.change(turnIndex);
         playOnCubit();
+        readyToMovement?.change(false);
         break;
       case 5:
         box5?.change(turnIndex);
@@ -134,17 +180,32 @@ class _GameBoardState extends State<GameBoard> {
       case 6:
         box6?.change(turnIndex);
         playOnCubit();
+        readyToMovement?.change(false);
         break;
       case 7:
         box7?.change(turnIndex);
         playOnCubit();
+        readyToMovement?.change(false);
         break;
       case 8:
         box8?.change(turnIndex);
         playOnCubit();
+        readyToMovement?.change(false);
         break;
       default:
         break;
     }
+  }
+
+  void clearBoxes() {
+    box0?.change(0);
+    box1?.change(0);
+    box2?.change(0);
+    box3?.change(0);
+    box4?.change(0);
+    box5?.change(0);
+    box6?.change(0);
+    box7?.change(0);
+    box8?.change(0);
   }
 }

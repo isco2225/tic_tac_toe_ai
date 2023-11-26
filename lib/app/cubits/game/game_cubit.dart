@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_constants/shared_constants.dart';
 
 part 'game_state.dart';
 
@@ -13,8 +12,10 @@ class GameCubit extends Cubit<GameState> {
             board: ['', '', '', '', '', '', '', '', ''],
             roundWinner: '',
             gameWinner: '',
-            playerOneWinCount: 0,
-            playerTwoWinCount: 0,
+            playerOneWinCount: 2,
+            playerTwoWinCount: 2,
+            winStyleNumber: 0,
+            rematch: false,
           ),
         );
   void restartGame() {
@@ -26,6 +27,8 @@ class GameCubit extends Cubit<GameState> {
         gameWinner: '',
         playerOneWinCount: 0,
         playerTwoWinCount: 0,
+        winStyleNumber: 0,
+        rematch: false,
       ),
     );
   }
@@ -47,8 +50,6 @@ class GameCubit extends Cubit<GameState> {
             roundWinner: 'X',
           ),
         );
-        _gameOver();
-        _resetBoard();
       } else {
         emit(
           state.copyWith(
@@ -68,8 +69,6 @@ class GameCubit extends Cubit<GameState> {
             roundWinner: 'O',
           ),
         );
-        _gameOver();
-        _resetBoard();
       } else {
         emit(
           state.copyWith(
@@ -85,23 +84,28 @@ class GameCubit extends Cubit<GameState> {
           roundWinner: 'Berabere',
         ),
       );
-      _resetBoard();
     }
 
     // Call AI player move after the human player's move
   }
 
-  Future<void> _resetBoard() async {
+  Future<void> resetBoard() async {
     if (state.gameWinner != '') {
       return;
     }
-    await Future.delayed(SharedDurations.s2);
     emit(
       state.copyWith(
         board: ['', '', '', '', '', '', '', '', ''],
         roundWinner: '',
+        winStyleNumber: 0,
       ),
     );
+  }
+
+  void rematch() {
+    emit(state.copyWith(
+      rematch: true,
+    ));
   }
 
   String _checkWinner(List<String> board) {
@@ -119,7 +123,7 @@ class GameCubit extends Cubit<GameState> {
     return winner;
   }
 
-  void _gameOver() {
+  void gameOver() {
     if (state.playerOneWinCount == 3) {
       emit(
         state.copyWith(
@@ -143,14 +147,18 @@ class GameCubit extends Cubit<GameState> {
 
   String _checkRows(List<String> board) {
     if (board[0] == board[1] && board[0] == board[2] && board[0] != '') {
+      emit(state.copyWith(winStyleNumber: 012));
+
       return board[0];
     }
 
     if (board[3] == board[4] && board[3] == board[5] && board[3] != '') {
+      emit(state.copyWith(winStyleNumber: 345));
       return board[3];
     }
 
     if (board[6] == board[7] && board[6] == board[8] && board[6] != '') {
+      emit(state.copyWith(winStyleNumber: 678));
       return board[6];
     }
     return '';
@@ -158,14 +166,17 @@ class GameCubit extends Cubit<GameState> {
 
   String _checkColumns(List<String> board) {
     if (board[0] == board[3] && board[0] == board[6] && board[0] != '') {
+      emit(state.copyWith(winStyleNumber: 036));
       return board[0];
     }
 
     if (board[1] == board[4] && board[1] == board[7] && board[1] != '') {
+      emit(state.copyWith(winStyleNumber: 147));
       return board[1];
     }
 
     if (board[2] == board[5] && board[2] == board[8] && board[2] != '') {
+      emit(state.copyWith(winStyleNumber: 258));
       return board[2];
     }
     return '';
@@ -176,10 +187,12 @@ class GameCubit extends Cubit<GameState> {
       return '';
     }
     if (board[2] == board[4] && board[4] == board[6]) {
+      emit(state.copyWith(winStyleNumber: 246));
       return board[4];
     }
 
     if (board[0] == board[8] && board[8] == board[4]) {
+      emit(state.copyWith(winStyleNumber: 048));
       return board[4];
     }
     return '';

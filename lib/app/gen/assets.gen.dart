@@ -13,12 +13,16 @@ import 'package:rive/rive.dart';
 class $AssetsAnimationsGen {
   const $AssetsAnimationsGen();
 
-  /// File path: assets/animations/tic_tac_toe_board.riv
-  RiveGenImage get ticTacToeBoard =>
-      const RiveGenImage('assets/animations/tic_tac_toe_board.riv');
+  /// File path: assets/animations/tic_tac_toe.riv
+  RiveGenImage get ticTacToe =>
+      const RiveGenImage('assets/animations/tic_tac_toe.riv');
+
+  /// File path: assets/animations/tic_tac_toe_game.riv
+  RiveGenImage get ticTacToeGame =>
+      const RiveGenImage('assets/animations/tic_tac_toe_game.riv');
 
   /// List of all assets
-  List<RiveGenImage> get values => [ticTacToeBoard];
+  List<RiveGenImage> get values => [ticTacToe, ticTacToeGame];
 }
 
 class Assets {

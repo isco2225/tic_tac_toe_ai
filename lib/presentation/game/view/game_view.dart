@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_xox_app/app/cubits/game/game_cubit.dart';
 import 'package:flutter_xox_app/presentation/game/view/tic_tac_toe_game.dart';
 import 'package:flutter_xox_app/presentation/home/game.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +16,7 @@ class GameView extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
+              context.read<GameCubit>().restartGame();
               context.goNamed(HomeScreen.name);
             },
             icon: const Icon(Icons.exit_to_app_outlined),
