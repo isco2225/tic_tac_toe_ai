@@ -96,7 +96,7 @@ class _TicTacToeGameState extends State<TicTacToeGame> {
                           '2.oyuncu ${gameState.playerTwoWinCount}',
                           style: const TextStyle(
                             fontSize: 24,
-                            color: Colors.greenAccent,
+                            color: Colors.white,
                           ),
                         ),
                       ),
