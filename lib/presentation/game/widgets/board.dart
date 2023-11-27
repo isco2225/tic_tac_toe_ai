@@ -15,7 +15,7 @@ class GameBoard extends StatefulWidget {
 
 class _GameBoardState extends State<GameBoard> {
   late StateMachineController _boardController;
-
+  //animasyon için kullanılacak inputları tanımladım.
   SMIInput<bool>? readyToMovement;
   SMIInput<double>? hasWinner;
   SMIInput<bool>? openBoard;
@@ -28,13 +28,13 @@ class _GameBoardState extends State<GameBoard> {
   SMIInput<double>? box6;
   SMIInput<double>? box7;
   SMIInput<double>? box8;
-
   @override
   void dispose() {
     _boardController.dispose();
     super.dispose();
   }
 
+  //animasyonu başlatmak için gereken bir fonksiyon.
   void onInit(Artboard artboard, double turn) async {
     _boardController = StateMachineController.fromArtboard(
       artboard,
@@ -46,7 +46,7 @@ class _GameBoardState extends State<GameBoard> {
       final gameState = context.read<GameCubit>().state;
       onRiveEvent(riveEvent, gameState.isTurnPlayer1 ? 1 : 2);
     });
-
+    //inputların rive karşılığını söyledik.
     readyToMovement = _boardController.findInput('readyToMovement');
     hasWinner = _boardController.findInput('hasWinner');
     openBoard = _boardController.findInput('openBoard');
@@ -62,6 +62,7 @@ class _GameBoardState extends State<GameBoard> {
   }
 
   void onRiveEvent(RiveEvent event, double turn) {
+    final winncounter = context.read<GameCubit>().state;
     if (context.read<GameCubit>().state.gameWinner != '') {
       return;
     }
@@ -71,8 +72,8 @@ class _GameBoardState extends State<GameBoard> {
       hasWinner?.change(0);
       readyToMovement?.change(true);
     } else if (event.name == 'onBoardClosed') {
-      if (context.read<GameCubit>().state.playerOneWinCount != 3 &&
-          context.read<GameCubit>().state.playerTwoWinCount != 3) {
+      if (winncounter.playerOneWinCount != 3 &&
+          winncounter.playerTwoWinCount != 3) {
         hasWinner?.change(0);
         openBoard?.change(true);
       }
@@ -88,7 +89,7 @@ class _GameBoardState extends State<GameBoard> {
             event.name == 'box8') &&
         (readyToMovement?.value ?? false)) {
       int? clickedBox = detectEventBox(event.name);
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {//sorulacak
         if (clickedBox != null) {
           movement(clickedBox, turn);
         }
@@ -142,7 +143,7 @@ class _GameBoardState extends State<GameBoard> {
     };
   }
 
-  void movement(int clickedBoxIndex, double turnIndex) {
+  void movement(int clickedBoxIndex, double turnIndex) {//turnindex neyi tutuyor sorulacak.
     void playOnCubit() {
       context.read<GameCubit>().playerMovement(clickedBoxIndex);
     }
