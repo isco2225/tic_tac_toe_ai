@@ -89,11 +89,13 @@ class _GameBoardState extends State<GameBoard> {
             event.name == 'box8') &&
         (readyToMovement?.value ?? false)) {
       int? clickedBox = detectEventBox(event.name);
-      WidgetsBinding.instance.addPostFrameCallback((_) {//sorulacak
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        //sorulacak
         if (clickedBox != null) {
           movement(clickedBox, turn);
         }
       });
+      //
     } else if (event.name == 'onMovementEnd') {
       if (context.read<GameCubit>().state.roundWinner == '') {
         readyToMovement?.change(true);
@@ -143,7 +145,8 @@ class _GameBoardState extends State<GameBoard> {
     };
   }
 
-  void movement(int clickedBoxIndex, double turnIndex) {//turnindex neyi tutuyor sorulacak.
+  void movement(int clickedBoxIndex, double turnIndex) {
+    //turnindex neyi tutuyor sorulacak.
     void playOnCubit() {
       context.read<GameCubit>().playerMovement(clickedBoxIndex);
     }
@@ -152,27 +155,27 @@ class _GameBoardState extends State<GameBoard> {
       case 0:
         box0?.change(turnIndex);
         playOnCubit();
-        readyToMovement?.change(false);
+        // readyToMovement?.change(false);
         break;
       case 1:
         box1?.change(turnIndex);
         playOnCubit();
-        readyToMovement?.change(false);
+        //  readyToMovement?.change(false);
         break;
       case 2:
         box2?.change(turnIndex);
         playOnCubit();
-        readyToMovement?.change(false);
+        //  readyToMovement?.change(false);
         break;
       case 3:
         box3?.change(turnIndex);
         playOnCubit();
-        readyToMovement?.change(false);
+        //  readyToMovement?.change(false);
         break;
       case 4:
         box4?.change(turnIndex);
         playOnCubit();
-        readyToMovement?.change(false);
+        //  readyToMovement?.change(false);
         break;
       case 5:
         box5?.change(turnIndex);
@@ -181,17 +184,17 @@ class _GameBoardState extends State<GameBoard> {
       case 6:
         box6?.change(turnIndex);
         playOnCubit();
-        readyToMovement?.change(false);
+        //  readyToMovement?.change(false);
         break;
       case 7:
         box7?.change(turnIndex);
         playOnCubit();
-        readyToMovement?.change(false);
+        //  readyToMovement?.change(false);
         break;
       case 8:
         box8?.change(turnIndex);
         playOnCubit();
-        readyToMovement?.change(false);
+        //  readyToMovement?.change(false);
         break;
       default:
         break;
