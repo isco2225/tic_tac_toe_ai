@@ -99,7 +99,14 @@ class _GameBoardState extends State<GameBoard> {
     } else if (event.name == 'onMovementEnd') {
       if (context.read<GameCubit>().state.roundWinner == '') {
         readyToMovement?.change(true);
-      } else {
+      }
+      else if (context.read<GameCubit>().state.roundWinner == 'Berabere'){
+        context.read<GameCubit>().resetBoard();
+      // todo: Kutu içleri animasyonsuz gidiyor.
+      clearBoxes();
+      openBoard?.change(false);
+      }
+       else {
         hasWinner?.change(context.read<GameCubit>().state.winStyleNumber);
       }
     } else if (event.name == 'roundEnd') {
