@@ -118,15 +118,30 @@ class _GameBoardState extends State<GameBoard> {
       openBoard?.change(true);
       context.read<GameCubit>().restartGame();
     }
-    return RiveAnimation.asset(
-      Assets.animations.ticTacToe.path,
-      stateMachines: const ['State Machine 1'],
-      onInit: (artBoard) {
-        onInit(
-          artBoard,
-          gameState.isTurnPlayer1 ? 1 : 2,
-        );
-      },
+    return Stack(
+      children: [
+        RiveAnimation.asset(
+          Assets.animations.ticTacToe.path,
+          stateMachines: const ['State Machine 1'],
+          onInit: (artBoard) {
+            onInit(
+              artBoard,
+              gameState.isTurnPlayer1 ? 1 : 2,
+            );
+          },
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 25, bottom: 70),
+            child: Container(
+              height: 50,
+              width: 235,
+              color: Colors.grey[600],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
