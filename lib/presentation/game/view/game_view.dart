@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_xox_app/app/cubits/game/game_cubit.dart';
 import 'package:flutter_xox_app/presentation/game/view/tic_tac_toe_game.dart';
-import 'package:flutter_xox_app/presentation/home/game.dart';
+import 'package:flutter_xox_app/presentation/home/home.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_widgets/shared_widgets.dart';
 

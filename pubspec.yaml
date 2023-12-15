@@ -25,6 +25,8 @@ dependencies:
   rive: ^0.11.16
   animations: ^2.0.8
   flutter_animate: ^4.3.0
+  hydrated_bloc: ^9.1.2
+
 
 
 # Developer Dependencies

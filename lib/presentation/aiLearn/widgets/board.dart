@@ -141,11 +141,11 @@ class _GameBoardState extends State<GameBoard> {
           alignment: Alignment.bottomRight,
           child: Padding(
             padding: const EdgeInsets.only(right: 25, bottom: 70),
-           /* child: Container(
+            child: Container(
               height: 50,
               width: 235,
               color: Colors.grey[600],
-            ),*/
+            ),
           ),
         ),
       ],
