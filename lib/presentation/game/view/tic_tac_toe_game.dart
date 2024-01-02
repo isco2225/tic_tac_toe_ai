@@ -5,57 +5,6 @@ import 'package:flutter_xox_app/app/cubits/game/game.dart';
 import 'package:flutter_xox_app/presentation/game/widgets/board.dart';
 import 'package:shared_constants/shared_constants.dart';
 import 'package:shared_widgets/shared_widgets.dart';
-
-/*class TicTacToeGame extends FlameGame {
-  @override
-  FutureOr<void> onLoad() async {
-    await add(
-      HatayiYasatText(
-        text: 'I',
-        position: Vector2(size.x / 2, size.y - 30),
-      ),
-    );
-    // TODO: implement onLoad
-    return super.onLoad();
-  }
-}
-
-class HatayiYasatText extends TextComponent
-    with TapCallbacks, HasGameReference<TicTacToeGame> {
-  HatayiYasatText({required String text, required Vector2 position}) {
-    this.text = text;
-    this.position = position;
-    anchor = Anchor.center;
-  }
-  bool isJumping = false;
-  @override
-  void onTapDown(TapDownEvent event) async {
-    jump();
-    // TODO: implement onTapDown
-    super.onTapDown(event);
-  }
-
-  @override
-  void update(double dt) {
-    if (position.y <= game.size.y - 30) {
-      print('ucuyo hatay');
-      position = Vector2(position.x, position.y + 0.5);
-    }
-    if (isJumping) {
-      position = Vector2(position.x, position.y - 1.5);
-    }
-    // TODO: implement update
-    super.update(dt);
-  }
-
-  void jump() async {
-    isJumping = true;
-    await Future.delayed(
-      const Duration(milliseconds: 500),
-    );
-    isJumping = false;
-  }
-}*/
 class TicTacToeGame extends StatefulWidget {
   const TicTacToeGame({super.key});
 

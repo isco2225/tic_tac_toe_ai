@@ -5,10 +5,10 @@ class TicTacToeAgentState extends Equatable {
 //0-1 arası değer alır. epsilon değeri yüksek olduğu sürece ajan daha fazla rastgele adım atar.
     required this.epsilonForX,
     required this.epsilonForY,
-//Bu değerler, ajanın her adımda ne kadar öğrenmesi gerektiğini kontrol eder
+//0-1 arası değer alır. Bu değer, ajanın her adımda ne kadar öğrenmesi gerektiğini kontrol eder
     required this.alphaForX, 
     required this.alphaForY,
-//Bu değerler, ajanın gelecekteki ödüllerin şu anki ödürlere göre ne kadar önemli olduğunu kontrol eder. 
+//0-1 arası değer alır. Bu değer, ajanın gelecekteki ödüllerin şu anki ödürlere göre ne kadar önemli olduğunu kontrol eder. 
     required this.gammaForX, 
     required this.gammaForY, 
 //Ajan bu tabloları kullanarak her durum için en iyi aksiyonu seçmeye çalışır

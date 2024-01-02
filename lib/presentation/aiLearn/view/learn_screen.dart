@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xox_app/presentation/aiLearn/view/game_view.dart';
+import 'package:flutter_xox_app/presentation/aiLearn/view/learn_view.dart';
 
 class AiLearnScreen extends StatelessWidget {
   const AiLearnScreen({super.key});

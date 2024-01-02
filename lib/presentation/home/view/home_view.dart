@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_xox_app/app/cubits/theme_color/theme_color_cubit.dart';
-import 'package:flutter_xox_app/presentation/aiLearn/view/game_screen.dart';
+import 'package:flutter_xox_app/presentation/aiLearn/view/learn_screen.dart';
+import 'package:flutter_xox_app/presentation/game/view/game_ai.dart';
 import 'package:flutter_xox_app/presentation/game/view/game_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_widgets/shared_widgets.dart';
@@ -44,8 +45,15 @@ class _HomeViewState extends State<HomeView> {
             },
           ),
           const SizedBox(
-            height: 10,
-          )
+            height: 32,
+          ),
+          GradientButton(
+            text: 'AI ile oyna',
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const GameAi()));
+            },
+          ),
         ],
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_xox_app/app/app.dart';
-import 'package:flutter_xox_app/presentation/aiLearn/view/game_screen.dart';
+import 'package:flutter_xox_app/presentation/aiLearn/view/learn_screen.dart';
 import 'package:flutter_xox_app/presentation/game/view/game_screen.dart';
 import 'package:flutter_xox_app/presentation/home/view/view.dart';
 import 'package:go_router/go_router.dart';
